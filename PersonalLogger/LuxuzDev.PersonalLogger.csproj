@@ -5,7 +5,7 @@
 
 		<!-- Información del paquete -->
 		<PackageId>LuxuzDev.PersonalLogger</PackageId>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<Authors>Angel Hernández</Authors>
 		<Company>LuxuzDev</Company>
 		<Description>Logger personal con consola PowerShell independiente, colores por tipo y archivo UTF-8.</Description>

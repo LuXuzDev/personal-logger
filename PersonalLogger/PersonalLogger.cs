@@ -14,6 +14,9 @@ public static class PersonalLogger
 
     private static Process? _consoleProcess;
     private static bool _initialized = false;
+    private static TelegramService _service;
+    
+    
 
     private static IExternalNotifier? _notifier;
 
@@ -32,6 +35,8 @@ public static class PersonalLogger
         // Crear carpeta de logs
         var logDir = Path.GetDirectoryName(_logFilePath)!;
         Directory.CreateDirectory(logDir);
+        
+        if(service is not null)_service = service;
 
         _initialized = true;
 
@@ -40,6 +45,9 @@ public static class PersonalLogger
             StartConsole();
             System.Threading.Thread.Sleep(1000);
         }
+
+       
+
     }
 
     public static void Log(string message, LogType type = LogType.Info, bool notify = false)
@@ -70,6 +78,25 @@ public static class PersonalLogger
                 }
             });
         }
+    }
+    
+    public static void Log(string message, bool sendTelegram, ITelegramBotSettings telegramBotSettings,
+        string endpoint,string path, string method,LogType type = LogType.Info)
+    {
+        
+        Log(message, type);
+
+        // 2. Envío a Telegram si se solicita y el servicio existe
+        if (sendTelegram && _service != null)
+        {
+            
+            Task.Run(async () => {
+                try {
+                    await _service.SendAlertAsync(message,endpoint,path,method);
+                } catch { }
+            });
+        }
+        
     }
 
     private static void StartConsole()

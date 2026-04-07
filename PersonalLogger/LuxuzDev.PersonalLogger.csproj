@@ -25,5 +25,9 @@
 		<None Include="../icon.png" Pack="true" PackagePath="\" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <PackageReference Include="Telegram.Bot" Version="22.9.5.3" />
+	</ItemGroup>
+
 
 </Project>
